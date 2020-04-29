@@ -1,5 +1,5 @@
-FROM openjdk:8
-ARG JAR_FILE=target/*.jar
+FROM openjdk:8 as build
+ARG JAR_FILE=build/target/*.jar
 COPY ${JAR_FILE} app.jar
 EXPOSE 8282
 ENTRYPOINT ["java","-jar","/app.jar"]
