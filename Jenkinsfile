@@ -3,9 +3,7 @@ node{
      git 'https://github.com/awstechguide/devops-demo'
    }
    stage('Compile-Package'){	  
-	  steps {
-                sh 'mvn clean install' 
-            }
+	sh 'mvn clean install' 
    }
    stage('Deploy to AWS'){
       
