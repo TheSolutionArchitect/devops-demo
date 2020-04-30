@@ -7,7 +7,9 @@ pipeline {
     }
     stages {
 	   stage('SCM Checkout'){
+	    steps {
           git 'https://github.com/awstechguide/devops-demo'
+		  }
         }
 
         stage('Build') { 
