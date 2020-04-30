@@ -2,10 +2,10 @@ node{
    stage('SCM Checkout'){
      git 'https://github.com/awstechguide/devops-demo'
    }
-   stage('Compile-Package'){
-      // Get maven home path
-      def mvnHome =  tool name: 'maven-3', type: 'maven'   
-      sh "${mvnHome}/bin/mvn install"
+   stage('Compile-Package'){	  
+	  steps {
+                sh 'mvn clean install' 
+            }
    }
    stage('Deploy to AWS'){
       
