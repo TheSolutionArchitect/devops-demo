@@ -1,33 +1,27 @@
 node {
-    def app
+                            // Get Artifactory server instance, defined in the Artifactory Plugin administration page.
+                            def server = Artifactory.server "artifactory"
+                            // Create an Artifactory Maven instance.
+                            def rtMaven = Artifactory.newMavenBuild()
+                            def buildInfo
 
-    stage('Clone repository') {
-        /* Cloning the Repository to our Workspace */
+                         rtMaven.tool = "maven"        
 
-        checkout scm
-    }
+                            stage('Artifactory configuration') {
+                                echo 'Configuring Artifactory'
+                                // Tool name from Jenkins configuration
+                                rtMaven.tool = "maven"
+                                // Set Artifactory repositories for dependencies resolution and artifacts deployment.
+                                rtMaven.deployer releaseRepo:'libs-release-local', snapshotRepo:'libs-snapshot-local', server: server
+                                rtMaven.resolver releaseRepo:'libs-release', snapshotRepo:'libs-snapshot', server: server
+                            }
 
-    stage('Build image') {
-        /* This builds the actual image */
+                            stage('Maven build') {
+                                buildInfo = rtMaven.run pom: 'pom.xml', goals: 'clean install'
+                            }
 
-        app = docker.build("awstechguide/devops-demo")
-    }
-
-    stage('Test image') {
-        
-        app.inside {
-            echo "Tests passed"
-        }
-    }
-
-    stage('Push image') {
-        /* 
-			You would need to first register with DockerHub before you can push images to your account
-		*/
-        docker.withRegistry('https://registry.hub.docker.com', 'docker') {
-            app.push("${env.BUILD_NUMBER}")
-            app.push("latest")
-            } 
-                echo "Trying to Push Docker Build to DockerHub"
-    }
-}
+                            stage('Publish build info') {
+                                server.publishBuildInfo buildInfo
+                            }
+                          
+                    }
