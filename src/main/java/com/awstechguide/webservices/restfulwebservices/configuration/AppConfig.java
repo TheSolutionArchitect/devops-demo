@@ -21,7 +21,8 @@ public class AppConfig {
 	
 	@Value("${jdbc.j_host}")
 	private String j_host;
-
+	
+	
 	@NotBlank
 	public String getHost() {
 		return host;
@@ -75,7 +76,6 @@ public class AppConfig {
 	public void setJ_host(String j_host) {
 		this.j_host = j_host;
 	}
-	
-	
+
 	
 }
