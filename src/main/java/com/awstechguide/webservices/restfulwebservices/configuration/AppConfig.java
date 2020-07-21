@@ -1,15 +1,20 @@
 package com.awstechguide.webservices.restfulwebservices.configuration;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
+import org.springframework.validation.annotation.Validated;
 
 @Component
 @ConfigurationProperties(prefix="config")
+@Validated
 public class AppConfig {
 
 	private String host;
-	private String port;
+	private int port;
 	private String database;
 	private String username;
 	private String password;
@@ -17,6 +22,7 @@ public class AppConfig {
 	@Value("${jdbc.j_host}")
 	private String j_host;
 
+	@NotBlank
 	public String getHost() {
 		return host;
 	}
@@ -25,14 +31,16 @@ public class AppConfig {
 		this.host = host;
 	}
 
-	public String getPort() {
+	@Min(8000)
+	public int getPort() {
 		return port;
 	}
 
-	public void setPort(String port) {
+	public void setPort(int port) {
 		this.port = port;
 	}
 
+	@NotBlank
 	public String getDatabase() {
 		return database;
 	}
@@ -41,6 +49,7 @@ public class AppConfig {
 		this.database = database;
 	}
 
+	@NotBlank
 	public String getUsername() {
 		return username;
 	}
@@ -49,6 +58,7 @@ public class AppConfig {
 		this.username = username;
 	}
 
+	@NotBlank
 	public String getPassword() {
 		return password;
 	}
@@ -57,6 +67,7 @@ public class AppConfig {
 		this.password = password;
 	}
 
+	@NotBlank
 	public String getJ_host() {
 		return j_host;
 	}
