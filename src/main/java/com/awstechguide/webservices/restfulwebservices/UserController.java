@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.awstechguide.webservices.restfulwebservices.configuration.AppConfig;
 import com.awstechguide.webservices.restfulwebservices.domain.Task;
 import com.awstechguide.webservices.restfulwebservices.domain.User;
 import com.awstechguide.webservices.restfulwebservices.domain.UserProfile;
@@ -30,11 +31,16 @@ public class UserController {
 	private UserProfile userProfile;
 	
 	@Autowired
+	private AppConfig appconfig;
+		
+	@Autowired
 	private UserService userService;
 	
 	@GetMapping("/")
 	public UserProfile getAll() {
 		userProfile.setUsers(userService.findAll());
+		System.out.println("host ***: "+appconfig.getHost());
+		System.out.println("J_host ***: "+appconfig.getJ_host());
 		return userProfile;
 	}
 	
