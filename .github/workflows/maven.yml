@@ -25,7 +25,14 @@ jobs:
       uses: actions/setup-java@v3
       with:
         java-version: '17'
-        distribution: 'temurin'
-        cache: maven
+#        distribution: 'temurin'
+#        cache: maven
+#    - name: Build with Maven
+#      run: mvn -B package --file pom.xml
     - name: Build with Maven
-      run: mvn -B package --file pom.xml
+      run: mvn clean install
+
+    - name: Execute Jenkinsfile
+      uses: jenkinsci/jenkinsfile-runner-action@v1
+      with:
+        jenkinsfile: Jenkinsfile
