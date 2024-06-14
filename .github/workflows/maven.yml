@@ -33,6 +33,6 @@ jobs:
       run: mvn clean install
 
     - name: Execute Jenkinsfile
-      uses: jenkinsci/jenkinsfile-runner-action@v1
-      with:
-        jenkinsfile: Jenkinsfile
+      run: |
+        chmod +x Jenkinsfile
+        ./Jenkinsfile
