@@ -102,6 +102,7 @@
                                  </configuration>
 			</plugin>
 		</plugins>
+		<outputDirectory>${project.basedir}/target</outputDirectory>
 		<finalName>devops-demo</finalName>
 	</build>
 
